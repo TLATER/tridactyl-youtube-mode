@@ -6,8 +6,12 @@ stdenv.mkDerivation {
   src = ../.;
   dontBuild = true;
 
+  configurePhase = ''
+    substituteInPlace ./src/youtube-mode --replace "js -r lib/" "js -s $out/share/tridactyl/lib/"
+  '';
+
   installPhase = ''
     mkdir -p $out/share/tridactyl/
-    cp src/* $out/share/tridactyl/
+    cp -r src/* $out/share/tridactyl/
   '';
 }
